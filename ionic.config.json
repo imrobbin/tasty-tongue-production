@@ -1,0 +1,7 @@
+{
+  "name": "angular-9-project",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
