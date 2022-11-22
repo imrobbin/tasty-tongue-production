@@ -1,0 +1,272 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Orders</ion-title>
+    </ion-toolbar>
+    <ion-toolbar>
+        <ion-segment [(ngModel)]="orderType">
+            <ion-segment-button value="Pending">
+                <ion-label>Pending</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="Accepted">
+                <ion-label>Accepted</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="All">
+                <ion-label>All</ion-label>
+            </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <app-skeleton *ngIf="!isDataLoaded" [skeletonFor]="'ordersList'"></app-skeleton>
+
+    <div *ngIf="isDataLoaded" [ngSwitch]="orderType">
+
+        <!-- List of All Pending orders Must be Accepted or Cancelled -->
+        <ion-list *ngSwitchCase="'Pending'">
+            <ion-card *ngFor="let order of pendingOrders; let i = index;">
+                <ion-item lines="full">
+                    <ion-avatar slot="start">
+                        <img [src]=" order.orderedBy.photoURL || '../../../../assets/images/avatar.png'">
+                    </ion-avatar>
+                    <ion-label>
+                        <h2>{{ order.orderedBy.displayName || order.orderedBy.email}}</h2>
+                        <p>{{order.orderDate | date:'dd MMM yy &#8226; h:mm aaa'}}</p>
+                    </ion-label>
+
+                    <ion-button fill="clear" slot="end" size="small" color="medium" class="ion-no-margin" (click)="toggleOrders(order)">
+                        <ion-icon ios="chevron-down-outline" md="chevron-down-sharp" [ngClass]="{'rotate-up': order.isExpanded, 'rotate-down': !order.isExpanded}"></ion-icon>
+                    </ion-button>
+                </ion-item>
+
+                <ion-item [lines]="order.isExpanded ? 'full' : 'none'">
+                    <ion-label>
+                        <p>{{order.cart.totalItems}} Items &#8226; Amount {{order.cart.cartTotal | currency:'INR':'symbol':'1.0'}}</p>
+                    </ion-label>
+                    <ion-chip slot="end" color="medium">
+                        <ion-label>#{{ order.orderToken }}</ion-label>
+                    </ion-chip>
+                </ion-item>
+
+                <ion-list [ngClass]="{'expanded': order.isExpanded, 'not-expanded': !order.isExpanded}">
+                    <ion-list-header>Ordered Items</ion-list-header>
+                    <ion-item *ngFor="let product of order.cart.products; let i = index;" [lines]="i+1 == order.cart.products.length ? 'full' : 'none'">
+                        <ion-thumbnail slot="start">
+                            <img [defaultImage]="thumbnailURL" [lazyLoad]="product.thumbnailURL">
+                        </ion-thumbnail>
+                        <ion-label>
+                            <h2>{{ product.title }}</h2>
+                        </ion-label>
+                        <ion-chip slot="end" color="medium">
+                            <ion-label>Qty {{ product.quantity }}</ion-label>
+                        </ion-chip>
+                    </ion-item>
+
+                    <ion-item lines="full">
+                        <ion-chip outline="true" color="primary" slot="start" (click)="pendingOrderAccepted(order)">
+                            <ion-icon md="checkmark-circle-sharp" ios="checkmark-circle-outline"></ion-icon>
+                            <ion-label>Accept</ion-label>
+                        </ion-chip>
+
+                        <ion-chip outline="true" color="danger" slot="end" (click)="cancelOrder(order)">
+                            <ion-icon md="trash-sharp" ios="trash-outline"></ion-icon>
+                            <ion-label>Cancel</ion-label>
+                        </ion-chip>
+                    </ion-item>
+
+                    <ion-item lines="none">
+                        <ion-label class="ion-text-wrap">
+                            <p>Delivery Address</p>
+                            <h4>{{order.address.address}}</h4>
+                            <p>{{order.address.contact }}</p>
+                        </ion-label>
+                        <ion-chip slot="end" outline="true" color="success" (click)="makeCallToClient(order.address.contact)">
+                            <ion-icon md="call-sharp" ios="call-outline"></ion-icon>
+                            <ion-label>Call</ion-label>
+                        </ion-chip>
+                    </ion-item>
+                </ion-list>
+            </ion-card>
+
+            <div class="no-data-found" *ngIf="pendingOrders.length === 0 && isDataLoaded">
+                <ion-card>
+                    <ion-card-header>
+                        <ion-card-title class="ion-text-center">No Pending Orders</ion-card-title>
+                    </ion-card-header>
+                </ion-card>
+            </div>
+        </ion-list>
+
+        <!-- List of All Accepted orders for delivery -->
+        <ion-list *ngSwitchCase="'Accepted'">
+            <ion-card *ngFor="let order of acceptedOrders; let i = index;">
+                <ion-item lines="full">
+                    <ion-avatar slot="start">
+                        <img [src]=" order.orderedBy.photoURL || '../../../../assets/images/avatar.png'">
+                    </ion-avatar>
+                    <ion-label>
+                        <h2>{{ order.orderedBy.displayName || order.orderedBy.email}}</h2>
+                        <p>{{order.orderDate | date:'dd MMM yy &#8226; h:mm aaa'}}</p>
+                    </ion-label>
+                    <ion-button fill="clear" slot="end" size="small" color="medium" class="ion-no-margin" (click)="toggleOrders(order)">
+                        <ion-icon ios="chevron-down-outline" md="chevron-down-sharp" [ngClass]="{'rotate-up': order.isExpanded, 'rotate-down': !order.isExpanded}"></ion-icon>
+                    </ion-button>
+                </ion-item>
+
+                <ion-item [lines]="order.isExpanded ? 'full' : 'none'">
+                    <ion-label>
+                        <p>{{order.cart.totalItems}} Items &#8226; Amount {{order.cart.cartTotal | currency:'INR':'symbol':'1.0'}}</p>
+                    </ion-label>
+                    <ion-chip slot="end" color="medium">
+                        <ion-label>#{{ order.orderToken }}</ion-label>
+                    </ion-chip>
+                </ion-item>
+
+                <ion-list [ngClass]="{'expanded': order.isExpanded, 'not-expanded': !order.isExpanded}">
+                    <ion-list-header>Ordered Items</ion-list-header>
+                    <ion-item lines="none" *ngFor="let product of order.cart.products; let i = index;" [lines]="i+1 == order.cart.products.length ? 'full' : 'none'">
+                        <ion-thumbnail slot="start">
+                            <img [defaultImage]="thumbnailURL" [lazyLoad]="product.thumbnailURL">
+                        </ion-thumbnail>
+                        <ion-label>
+                            <h2>{{ product.title }}</h2>
+                        </ion-label>
+                        <ion-chip slot="end" color="medium">
+                            <ion-label>Qty {{ product.quantity }}</ion-label>
+                        </ion-chip>
+                    </ion-item>
+
+                    <ion-item lines="full">
+                        <ion-chip outline="true" color="secondary" slot="start" (click)="acceptedOrderDelivered(order)">
+                            <ion-icon md="checkmark-done-circle-sharp" ios="checkmark-done-circle-outline"></ion-icon>
+                            <ion-label>Delivered</ion-label>
+                        </ion-chip>
+
+                        <ion-chip outline="true" color="danger" slot="end" (click)="cancelOrder(order)">
+                            <ion-icon md="trash-sharp" ios="trash-outline"></ion-icon>
+                            <ion-label>Cancel</ion-label>
+                        </ion-chip>
+                    </ion-item>
+
+                    <ion-item lines="none">
+                        <ion-label class="ion-text-wrap">
+                            <p>Delivery Address</p>
+                            <h4>{{order.address.address}}</h4>
+                            <p>{{order.address.contact }}</p>
+                        </ion-label>
+                        <ion-chip slot="end" outline="true" color="success" (click)="makeCallToClient(order.address.contact)">
+                            <ion-icon md="call-sharp" ios="call-outline"></ion-icon>
+                            <ion-label>Call</ion-label>
+                        </ion-chip>
+                    </ion-item>
+                </ion-list>
+            </ion-card>
+
+            <div class="no-data-found" *ngIf="acceptedOrders.length === 0 && isDataLoaded">
+                <ion-card>
+                    <ion-card-header>
+                        <ion-card-title class="ion-text-center">No Accepted Orders</ion-card-title>
+                    </ion-card-header>
+                </ion-card>
+            </div>
+        </ion-list>
+
+        <!-- List of All orders with filter to see specific order type -->
+        <ion-list *ngSwitchCase="'All'">
+            <ion-card *ngFor="let order of allOrders; let i = index;">
+                <ion-item lines="full">
+                    <ion-avatar slot="start">
+                        <img [src]=" order.orderedBy.photoURL || '../../../../assets/images/avatar.png'">
+                    </ion-avatar>
+                    <ion-label>
+                        <h2>{{ order.orderedBy.displayName || order.orderedBy.email}}</h2>
+                        <p>{{order.orderDate | date:'dd MMM yy &#8226; h:mm aaa'}}</p>
+                    </ion-label>
+
+                    <ion-button fill="clear" slot="end" size="small" color="medium" class="ion-no-margin" (click)="toggleOrders(order)">
+                        <ion-icon ios="chevron-down-outline" md="chevron-down-sharp" [ngClass]="{'rotate-up': order.isExpanded, 'rotate-down': !order.isExpanded}"></ion-icon>
+                    </ion-button>
+                </ion-item>
+
+                <ion-item [lines]="order.isExpanded ? 'full' : 'none'">
+                    <ion-label>
+                        <p>{{order.cart.totalItems}} Items &#8226; Amount {{order.cart.cartTotal | currency:'INR':'symbol':'1.0'}}</p>
+                    </ion-label>
+
+                    <ion-chip slot="end" *ngIf="order.orderStatus === 'Pending'" color="primary">
+                        <ion-label>
+                            <h4>{{order.orderStatus}}</h4>
+                        </ion-label>
+                    </ion-chip>
+                    <ion-chip slot="end" *ngIf="order.orderStatus === 'Accepted'" color="secondary">
+                        <ion-label>
+                            <h4>{{order.orderStatus}}</h4>
+                        </ion-label>
+                    </ion-chip>
+                    <ion-chip slot="end" *ngIf="order.orderStatus === 'Delivered'" color="success">
+                        <ion-label>
+                            <h4>{{order.orderStatus}}</h4>
+                        </ion-label>
+                    </ion-chip>
+                    <ion-chip slot="end" *ngIf="order.orderStatus === 'Cancelled'" color="danger">
+                        <ion-label>
+                            <h4>{{order.orderStatus}}</h4>
+                        </ion-label>
+                    </ion-chip>
+                </ion-item>
+
+                <ion-list [ngClass]="{'expanded': order.isExpanded, 'not-expanded': !order.isExpanded}">
+                    <ion-list-header>Ordered Items</ion-list-header>
+                    <ion-item *ngFor="let product of order.cart.products; let i = index;" [lines]="i+1 == order.cart.products.length ? 'full' : 'none'">
+                        <ion-thumbnail slot="start">
+                            <img [defaultImage]="thumbnailURL" [lazyLoad]="product.thumbnailURL">
+                        </ion-thumbnail>
+                        <ion-label>
+                            <h2>{{ product.title }}</h2>
+                        </ion-label>
+                        <ion-chip slot="end" color="medium">
+                            <ion-label>Qty {{ product.quantity }}</ion-label>
+                        </ion-chip>
+                    </ion-item>
+
+                    <ion-item lines="none">
+                        <ion-label class="ion-text-wrap">
+                            <p>Delivery Address</p>
+                            <h4>{{order.address.address}}</h4>
+                            <p>{{order.address.contact }}</p>
+                        </ion-label>
+                        <ion-chip slot="end" color="medium">
+                            <ion-label>
+                                <h4>#{{order.orderToken}}</h4>
+                            </ion-label>
+                        </ion-chip>
+                    </ion-item>
+                </ion-list>
+            </ion-card>
+
+            <div class="no-data-found" *ngIf="allOrders.length === 0 && isDataLoaded">
+                <ion-card>
+                    <ion-card-header>
+                        <ion-card-title class="ion-text-center">No Orders</ion-card-title>
+                    </ion-card-header>
+                </ion-card>
+            </div>
+        </ion-list>
+    </div>
+
+    <div class="no-data-found">
+        <ion-card *ngIf="allOrders.length === 0 && isDataLoaded">
+            <ion-card-header>
+                <ion-card-title class="ion-text-center">No Orders Yet.</ion-card-title>
+            </ion-card-header>
+            <ion-card-content class="ion-text-center">
+                <p>The Orders placed by users will be shown here.</p>
+            </ion-card-content>
+        </ion-card>
+    </div>
+
+</ion-content>

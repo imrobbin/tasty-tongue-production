@@ -1,0 +1,123 @@
+<ion-header class="ion-no-border ion-no-shadow">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-button color="primary" (click)="onCancel()">
+                <ion-icon slot="icon-only" md="arrow-back-sharp" ios="arrow-back-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title>Cart</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list *ngIf="cartData$ | async as cart" lines="full" class="ion-no-padding">
+        <ion-list-header>Items in cart</ion-list-header>
+
+        <ion-item class="btn-toolbar" *ngFor="let product of cart.products">
+            <ion-thumbnail slot="start">
+                <img [defaultImage]="thumbnailURL" [lazyLoad]="product.thumbnailURL">
+            </ion-thumbnail>
+            <ion-label>
+                <h2>{{ product.title }}</h2>
+                <p>{{ product.price | currency:'INR':'symbol':'1.0' }}x{{ product.quantity }} = {{ product.price * product.quantity | currency:'INR':'symbol':'1.0'}}</p>
+            </ion-label>
+            <div class="btn-mimicry" slot="end">
+                <ion-button class="buy-btn" fill="clear" (click)="add(product)" *ngIf="product.quantity === 0; else cartBtns">
+                    Add
+                </ion-button>
+                <ng-template #cartBtns>
+                    <ion-button fill="clear" (click)="remove(product)" *ngIf="product.quantity === 1; else removeBtn">
+                        <ion-icon color="danger" name="trash-outline"></ion-icon>
+                    </ion-button>
+                    <ng-template #removeBtn>
+                        <ion-button fill="clear" (click)="remove(product)">
+                            <ion-icon color="dark" name="remove-circle-outline"></ion-icon>
+                        </ion-button>
+                    </ng-template>
+                    &nbsp;{{ product.quantity }}&nbsp;
+                    <ion-button fill="clear" (click)="add(product)">
+                        <ion-icon color="primary" name="add-circle-outline"></ion-icon>
+                    </ion-button>
+                </ng-template>
+            </div>
+        </ion-item>
+        <ion-list-header>Bill Details</ion-list-header>
+        <ion-item lines="none">
+            <ion-label>
+                <p>Total Items</p>
+            </ion-label>
+            <ion-label slot="end" class="ion-text-right">
+                <p>{{ cart.totalItems }}</p>
+            </ion-label>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>
+                <p>Total Amount</p>
+            </ion-label>
+            <ion-label slot="end" class="ion-text-right">
+                <p>{{ cart.cartTotal | currency:'INR':'symbol':'1.0' }}</p>
+            </ion-label>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>
+                <h2>Grand Total</h2>
+            </ion-label>
+            <ion-label slot="end" class="ion-text-right">
+                <h2>{{ cart.cartTotal | currency:'INR':'symbol':'1.0' }}</h2>
+            </ion-label>
+        </ion-item>
+
+        <ion-item lines="none">
+            <ion-label>
+                <p>Payment Mode</p>
+            </ion-label>
+            <ion-label slot="end" class="ion-text-right">
+                <p>Cash On Delivery</p>
+            </ion-label>
+        </ion-item>
+
+    </ion-list>
+</ion-content>
+
+<div *ngIf="cartData$ | async as cart">
+    <ion-footer class="ion-no-border ion-no-shadow" *ngIf="cart.totalItems > 0">
+        <ion-toolbar>
+            <ion-list class="ion-no-padding address-btn">
+                <ion-list-header>
+                    <ion-label>Delivery Address</ion-label>
+                    <ion-button *ngIf="address === undefined; else changeAddress" fill="clear" class="ion-text-capitalize" (click)="addDeliveryAddress('add', null)">
+                        Add
+                    </ion-button>
+
+                    <ng-template #changeAddress>
+                        <ion-button fill="clear" color="secondary" class="ion-text-capitalize" (click)="addDeliveryAddress('change', address)">
+                            Change
+                        </ion-button>
+                    </ng-template>
+                </ion-list-header>
+                <ion-item lines="none" *ngIf="address === undefined; else showAddress">
+                    <ion-icon md="home-sharp" ios="home-outline" slot="start" color="danger"></ion-icon>
+                    <ion-label>
+                        <h2>Add an address</h2>
+                    </ion-label>
+                </ion-item>
+                <ng-template #showAddress>
+                    <ion-item lines="none">
+                        <ion-icon md="home-sharp" ios="home-outline" slot="start" color="success"></ion-icon>
+                        <ion-label>
+                            <h3 class="ion-text-wrap">{{ address.address}}</h3>
+                            <p>Contact: {{ address.contact }}</p>
+                        </ion-label>
+                    </ion-item>
+                </ng-template>
+            </ion-list>
+        </ion-toolbar>
+        <ion-toolbar>
+            <ion-button expand="block" color="primary" [disabled]="!isAddressExist" (click)="proceedToPlaceOrder(cart)">
+                Place Order
+            </ion-button>
+        </ion-toolbar>
+    </ion-footer>
+</div>

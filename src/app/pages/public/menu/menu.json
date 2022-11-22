@@ -1,0 +1,72 @@
+{
+    "products": [{
+            "title": "Samosa",
+            "summary": "A samosa is a fried or baked pastry with a savoury filling, such as spiced potatoes, onions, peas, cheese or lentils.",
+            "image": "none",
+            "price": [{
+                    "name": "Per Plate (2pcs)",
+                    "value": 15
+                },
+                {
+                    "name": "Per Piece",
+                    "value": 8
+                }
+            ],
+            "availability": [{ "id": 1, "at": "Morning", "value": true }]
+        },
+        {
+            "title": "Aloo Bonda",
+            "summary": "Bonda is a typical South Indian snack that has various sweet and spicy versions in different regions. Most common of which is 'Aloo Bonda', and other region specific variations including potato replaced with sweet potato, tapioca, grated pineapple, green peas, etc.",
+            "image": "none",
+            "price": [{
+                    "name": "Per Plate (2pcs)",
+                    "value": 15
+                },
+                {
+                    "name": "Per Piece",
+                    "value": 8
+                }
+            ],
+            "availability": [
+                { "id": 1, "at": "Morning", "value": true },
+                { "id": 2, "at": "Evening", "value": true }
+            ]
+        },
+        {
+            "title": "Bread Pakora",
+            "summary": "Bread Pakora is a popular and tasty snack of deep fried bread fritters from the North Indian Cuisine. Stuffed Bread pakora – Made with a stuffing of mashed & spiced potatoes, dipped in gram flour batter and then deep-fried.",
+            "image": "none",
+            "price": [{
+                "name": "Per Plate",
+                "value": 10
+            }],
+            "availability": [
+                { "id": 1, "at": "Morning", "value": true },
+                { "id": 2, "at": "Evening", "value": true }
+            ]
+        },
+        {
+            "title": "Mangodi",
+            "summary": "Mangodi is a pakoda or wadi like snack made with a batter of soaked and spiced moong dal. The batter is piped out as small piece and crispy fried.",
+            "image": "none",
+            "price": [{
+                "name": "Per Plate",
+                "value": 15
+            }],
+            "availability": [
+                { "id": 1, "at": "Morning", "value": true },
+                { "id": 2, "at": "Evening", "value": true }
+            ]
+        },
+        {
+            "title": "Bhajiya",
+            "summary": "Bhajiya is made with a batter of besan flavoured with onions, garlic, green chillies, ginger, coriander leaves mixed with some simple masala.",
+            "image": "none",
+            "price": [{
+                "name": "Per Plate",
+                "value": 10
+            }],
+            "availability": [{ "id": 1, "at": "Evening", "value": true }]
+        }
+    ]
+}

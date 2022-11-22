@@ -1,0 +1,40 @@
+<ion-header class="ion-no-border ion-no-shadow">
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-button (click)="onCancel()">
+                <ion-icon slot="icon-only" md="arrow-back-sharp" ios="arrow-back-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title>Verify Email</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="login-content">
+    <ion-grid class="ion-no-padding">
+        <ion-row class="ion-justify-content-center">
+            <ion-col class="ion-align-self-center ion-no-padding" size-md="6" size-lg="5" size-xs="12">
+                <div *ngIf="userData" class="no-data-found">
+                    <ion-card>
+                        <ion-card-header>
+                            <ion-card-title class="ion-text-center">
+                                Verify Email
+                            </ion-card-title>
+                        </ion-card-header>
+                        <ion-card-content class="ion-text-center">
+                            <p>We have sent a confirmation email to
+                                <strong>{{userData.email }}</strong>.
+                            </p>
+                            <p>Please check your email and click on the link to verfiy your email address.</p>
+                        </ion-card-content>
+                        <ion-card-header>
+                            <ion-button expand="block" (click)="resendVerificationMail()">
+                                Resend Verification Email
+                            </ion-button>
+                        </ion-card-header>
+                    </ion-card>
+                </div>
+
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

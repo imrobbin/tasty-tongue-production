@@ -1,0 +1,35 @@
+{
+  "appId": "in.fullstackdevs.tastytongue",
+  "appName": "Tasty Tongue",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "plugins": {
+    "SplashScreen": {
+      "showSpinner": true,
+      "launchShowDuration": 3000
+    },
+    "PushNotifications": {
+      "presentationOptions": [
+        "badge",
+        "sound",
+        "alert"
+      ]
+    },
+    "GoogleAuth": {
+      "scopes": [
+        "profile",
+        "email"
+      ],
+      "serverClientId": "317010414900-mhhtt910lft88m89g6rb6c0hluemr9db.apps.googleusercontent.com",
+      "forceCodeForRefreshToken": true
+    }
+  },
+  "cordova": {},
+  "server": {
+    "url": "http://192.168.43.253:8100",
+    "cleartext": true,
+    "originalUrl": "http://192.168.43.253:8100",
+    "originalCleartext": true
+  }
+}

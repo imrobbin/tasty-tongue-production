@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Tasty Tongue</string>
+    <string name="title_activity_main">Tasty Tongue</string>
+    <string name="package_name">in.fullstackdevs.tastytongue</string>
+    <string name="custom_url_scheme">in.fullstackdevs.tastytongue</string>
+    <string name="server_client_id">317010414900-mhhtt910lft88m89g6rb6c0hluemr9db.apps.googleusercontent.com</string>
+</resources>

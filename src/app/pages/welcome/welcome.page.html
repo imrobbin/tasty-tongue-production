@@ -1,0 +1,55 @@
+<!-- <ion-header [translucent]="true" class="ion-no-border">
+    <ion-toolbar>
+        <ion-buttons slot="end">
+            <ion-chip [class.show-chip]="!showSkip" outline="true" color="primary" (click)="navigateToLogin()" [hidden]="!showSkip">
+                <ion-label class="ion-text-uppercase">Skip</ion-label>
+                <ion-icon name="chevron-forward-outline"></ion-icon>
+            </ion-chip>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header> -->
+
+<ion-content [fullscreen]="true">
+    <ion-grid class="ion-no-padding">
+        <ion-row class="ion-justify-content-center">
+            <ion-col class="ion-align-self-center ion-no-padding" size-md="6" size-lg="5" size-xs="12">
+
+                <div class="hero-container">
+                    <div class="img-container">
+                        <ion-img src="../../../../assets/images/logo.png"></ion-img>
+                    </div>
+                </div>
+
+                <div class="ion-padding">
+                    <ion-button class="ion-text-capitalize" expand="block" color="secondary" fill="outline" (click)="continueWithGoogle()">
+                        <ion-icon slot="start" name="logo-google"></ion-icon>
+                        &nbsp; Log In with Google
+                    </ion-button>
+                </div>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+    <ion-toolbar>
+        <ion-grid class="ion-no-padding">
+            <ion-row class="ion-justify-content-center">
+                <ion-col class="ion-align-self-center ion-no-padding" size="6">
+                    <div class="ion-padding">
+                        <ion-button expand="full" class="submit-btn" (click)="openLoginModel()">
+                            Login
+                        </ion-button>
+                    </div>
+                </ion-col>
+                <ion-col class="ion-align-self-center ion-no-padding" size="6">
+                    <div class="ion-padding">
+                        <ion-button expand="full" class="submit-btn" (click)="openRegisterModel()">
+                            Register
+                        </ion-button>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-toolbar>
+</ion-footer>

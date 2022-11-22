@@ -1,0 +1,25 @@
+.btn-toolbar {
+    .btn-mimicry {
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        border-radius: 5px;
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2), 0 0 0 0 rgba(0, 0, 0, 0.14), 0 0 0 0 rgba(0, 0, 0, 0.12);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .buy-btn {
+            width: 97px !important;
+        }
+        ion-button {
+            margin: 0;
+            height: 2rem;
+        }
+    }
+}
+
+.address-btn {
+    padding-bottom: 0;
+    ion-button {
+        margin: 0;
+        height: 2rem;
+    }
+}

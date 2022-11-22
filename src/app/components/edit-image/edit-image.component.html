@@ -1,0 +1,40 @@
+<ion-content>
+    <div class="img-container">
+        <image-cropper class="img-to-crop" format="png" [imageURL]="imageToCrop" [aspectRatio]="cropRatio" [maintainAspectRatio]="true" [canvasRotation]="rotateImageBy" (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()" (imageCropped)="imageCropped($event)"
+            [cropperMinWidth]="cropperMinWidth" (loadImageFailed)="loadImageFailed()" [resizeToWidth]="resizeToWidth">
+        </image-cropper>
+    </div>
+</ion-content>
+<ion-footer class="ion-no-border">
+
+    <ion-toolbar color="dark">
+        <ion-grid class="ion-no-padding">
+            <ion-row class="ion-justify-content-center">
+                <ion-col class="ion-align-self-center ion-no-padding" size="4">
+                    <div class="ion-text-center">
+                        <ion-chip (click)="croppingCancel()" outline="true" color="light">
+                            <ion-icon md="close-circle-sharp" ios="close-circle-outline"></ion-icon>
+                            <ion-label>Cancel</ion-label>
+                        </ion-chip>
+                    </div>
+                </ion-col>
+                <ion-col class="ion-align-self-center ion-no-padding" size="4">
+                    <div class="ion-text-center">
+                        <ion-chip (click)="rotateImage()" outline="true" color="light">
+                            <ion-icon md="refresh-circle-sharp" ios="refresh-circle-outline"></ion-icon>
+                            <ion-label>Rotate</ion-label>
+                        </ion-chip>
+                    </div>
+                </ion-col>
+                <ion-col class="ion-align-self-center ion-no-padding" size="4">
+                    <div class="ion-text-center">
+                        <ion-chip (click)="croppingDone()" outline="true" color="light">
+                            <ion-icon md="checkmark-circle-sharp" ios="checkmark-circle-outline"></ion-icon>
+                            <ion-label>Done</ion-label>
+                        </ion-chip>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,88 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref='/'></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{ updatingProduct ? 'Update ' : 'Add ' }} Product</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="product-content">
+    <ion-grid class="ion-no-padding">
+        <ion-row class="ion-justify-content-center">
+            <ion-col class="ion-align-self-center ion-no-padding" size-md="6" size-lg="5" size-xs="12">
+
+                <div class="main-container">
+
+                    <div class="local-page-content">
+
+                        <ion-list lines="inset" inset="true" class="add-product-form">
+                            <form [formGroup]="addProductForm">
+
+                                <div class="ion-text-center">
+                                    <img [defaultImage]="defaultImageBanner" [lazyLoad]="addProductForm.controls['image'].value">
+                                </div>
+
+                                <input type="file" #fileInput (change)="openImageFileSelector($event)" hidden="true" accept="image/*" />
+
+                                <div class="ion-text-center ion-padding-vertical">
+                                    <ion-chip outline="true" color="primary" (click)="startTakingPhoto()">
+                                        <ion-icon md="image-sharp" ios="image-outline"></ion-icon>
+                                        <ion-label>{{ isPhotoSelected ? 'Change' : 'Choose' }} Photo</ion-label>
+                                    </ion-chip>
+                                </div>
+
+                                <div class="form-field">
+                                    <ion-item>
+                                        <ion-label position="floating">Product Name
+                                            <ion-text color="danger">*</ion-text>
+                                        </ion-label>
+                                        <ion-input formControlName="title" type="text" [class.invalid]="!addProductForm.controls['title'].valid && addProductForm.controls['title'].touched">
+                                        </ion-input>
+                                    </ion-item>
+                                </div>
+
+                                <div class="form-field">
+                                    <ion-item>
+                                        <ion-label position="floating">Price
+                                            <ion-text color="danger">*</ion-text>
+                                        </ion-label>
+                                        <ion-input formControlName="price" type="tel" [class.invalid]="!addProductForm.controls['price'].valid && addProductForm.controls['price'].touched">
+                                        </ion-input>
+                                    </ion-item>
+                                </div>
+
+                                <div class="form-field">
+                                    <ion-item>
+                                        <ion-label position="floating">Availability
+                                            <ion-text color="danger">*</ion-text>
+                                        </ion-label>
+                                        <ion-select formControlName="availability" multiple="true">
+                                            <ion-select-option *ngFor="let data of availabilityData" [value]="data">
+                                                {{ data }}
+                                            </ion-select-option>
+                                        </ion-select>
+                                    </ion-item>
+                                </div>
+
+                                <div class="form-field">
+                                    <ion-item>
+                                        <ion-label position="floating">Product description</ion-label>
+                                        <ion-textarea autoGrow="true" spellcheck="true" formControlName="summary" [class.invalid]="!addProductForm.controls['summary'].valid && addProductForm.controls['summary'].touched"></ion-textarea>
+                                    </ion-item>
+                                </div>
+
+
+                                <div class="form-submit-button">
+                                    <ion-button expand="block" [disabled]="!addProductForm.valid || !addProductFormDidChanged" (click)="submitAddProductForm(addProductForm)">
+                                        {{ updatingProduct ? 'Update ' : 'Add ' }}Product
+                                    </ion-button>
+                                </div>
+                            </form>
+                        </ion-list>
+                    </div>
+                </div>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

@@ -1,0 +1,69 @@
+<ion-header class="ion-no-border ion-no-shadow">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-button color="primary" (click)="onCancel()">
+                <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title>Registration</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+    <ion-list inset="true" lines="inset" class="ion-padding signup-form">
+
+        <form [formGroup]="signupForm">
+            <div class="form-field">
+                <ion-item>
+                    <ion-label position="floating">Email</ion-label>
+                    <ion-input formControlName="email" type="email" [class.invalid]="!signupForm.controls['email'].valid && signupForm.controls['email'].touched">
+                    </ion-input>
+                </ion-item>
+                <ion-text color="medium" class="ion-text-start help-message">
+                    You will recieve an email for varification.
+                </ion-text>
+            </div>
+
+            <div class="form-field">
+                <ion-item>
+                    <ion-label position="floating">Password</ion-label>
+                    <ion-input formControlName="password" [type]="passwordTpye" minlength="8" [class.invalid]="!signupForm.controls['password'].valid && signupForm.controls['password'].touched">
+                    </ion-input>
+
+                    <ion-icon (click)="togglePassword()" slot="end" [color]="passwordShown ? 'dark' : 'medium'" [name]="passwordShown ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+                </ion-item>
+                <ion-text color="medium" class="ion-text-start help-message">
+                    Must be 8 characters long with 1 alphabet, 1 number & 1 symbol.
+                </ion-text>
+            </div>
+
+            <div class="ion-padding-vertical">
+                <ion-button expand="block" [disabled]="!signupForm.valid" (click)="_signupAction(signupForm)">
+                    Sign up
+                </ion-button>
+            </div>
+
+        </form>
+
+
+        <span class="divider line one-line">or</span>
+
+        <div class="ion-padding-vertical">
+            <ion-button class="ion-text-capitalize" expand="block" color="secondary" fill="outline" (click)="continueWithGoogle()">
+                <ion-icon slot="start" name="logo-google"></ion-icon>
+                &nbsp; Register with Google
+            </ion-button>
+        </div>
+    </ion-list>
+</ion-content>
+
+<ion-footer class="ion-no-border ion-no-shadow">
+    <ion-toolbar class="ion-text-center">
+        <ion-button (click)="openLogin()" color="medium" fill="clear" class="ion-text-capitalize" expand="block">
+            Already have an account? &nbsp;
+            <ion-text color="primary">Login</ion-text>
+        </ion-button>
+    </ion-toolbar>
+</ion-footer>

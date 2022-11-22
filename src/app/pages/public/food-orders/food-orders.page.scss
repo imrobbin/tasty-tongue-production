@@ -1,0 +1,21 @@
+.not-expanded {
+    display: none;
+    // height: 0;
+    transition: display 0.3s ease-in;
+}
+
+.expanded {
+    display: block;
+    // height: 100%;
+    transition: display 0.3s ease-in;
+}
+
+.rotate-down {
+    transform: rotate(0deg);
+    transition: transform 0.3s linear;
+}
+
+.rotate-up {
+    transform: rotate(180deg);
+    transition: transform 0.3s linear;
+}

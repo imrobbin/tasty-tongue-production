@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "317010414900",
+    "firebase_url": "https://tasty-tongue-res.firebaseio.com",
+    "project_id": "tasty-tongue-res",
+    "storage_bucket": "tasty-tongue-res.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:317010414900:android:4371ab3f8f48529edaa961",
+        "android_client_info": {
+          "package_name": "in.fullstackdevs.tastytongue"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "317010414900-mhhtt910lft88m89g6rb6c0hluemr9db.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzcYlbg_7-V8N5KOyYmXvH4q1vYqFmR1I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "317010414900-mhhtt910lft88m89g6rb6c0hluemr9db.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,82 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Products</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <app-skeleton *ngIf="!isDataLoaded" [skeletonFor]="'productsList'"></app-skeleton>
+
+    <ion-list *ngIf="isDataLoaded">
+        <ion-list-header>Products</ion-list-header>
+
+        <ion-card *ngFor="let product of productsData$ | async as products">
+            <div class="ion-text-center">
+                <img [defaultImage]="defaultImageBanner" [lazyLoad]="product.bannerURL">
+            </div>
+            <ion-item lines="none">
+                <ion-label>
+                    <p>Available at
+                        <ion-text>{{ product.availability.join(', ') }}</ion-text>
+                    </p>
+                    <h2>{{ product.title }}</h2>
+                </ion-label>
+                <ion-button fill="clear" slot="end" size="small" color="medium" class="ion-no-margin" (click)="toggleSummary(product)">
+                    <ion-icon md="chevron-down-sharp" ios="chevron-down-outline" [ngClass]="{'rotate-up': product.isExpanded, 'rotate-down': !product.isExpanded}"></ion-icon>
+                </ion-button>
+            </ion-item>
+
+            <ion-item lines="none" [ngClass]="{'expanded': product.isExpanded, 'not-expanded': !product.isExpanded}">
+                <ion-label class="ion-no-margin">
+                    <p class="ion-text-justify summary">{{ product.summary }}</p>
+                </ion-label>
+            </ion-item>
+
+            <ion-item lines="none">
+                <ion-label>
+                    <h3>{{ product.price | currency:'INR':'symbol':'1.0' }}</h3>
+                </ion-label>
+            </ion-item>
+
+            <ion-row class="admin-toolbar">
+                <ion-col size="6" class="ion-text-left">
+                    <ion-chip outline="true" color="secondary" (click)="onEditProduct(product)">
+                        <ion-icon md="create-sharp" ios="create-outline"></ion-icon>
+                        <ion-label>Edit</ion-label>
+                    </ion-chip>
+                </ion-col>
+                <ion-col size="6" class="ion-text-right">
+                    <ion-chip outline="true" color="danger" (click)="onDeleteProduct(product)">
+                        <ion-icon md="trash-sharp" ios="trash-outline"></ion-icon>
+                        <ion-label>Delete</ion-label>
+                    </ion-chip>
+                </ion-col>
+            </ion-row>
+
+        </ion-card>
+
+    </ion-list>
+
+    <div *ngIf="productsData$ | async as products" class="no-data-found">
+        <ion-card *ngIf="products.length === 0 && isDataLoaded">
+            <ion-card-header>
+                <ion-card-title class="ion-text-center">No Product Added.</ion-card-title>
+            </ion-card-header>
+            <ion-card-content class="ion-text-center">
+                <p>The Products uploaded by you will be shown here.</p>
+            </ion-card-content>
+        </ion-card>
+    </div>
+
+</ion-content>
+
+<ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="isDataLoaded">
+    <!-- <ion-fab-button size="small" (click)="requestToken()"> -->
+    <ion-fab-button size="small" routerLink="/tastytongue/products/add-product">
+        <ion-icon md="add-sharp" ios="add-outline"></ion-icon>
+    </ion-fab-button>
+</ion-fab>

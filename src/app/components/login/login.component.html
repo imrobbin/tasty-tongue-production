@@ -1,0 +1,72 @@
+<ion-header class="ion-no-border ion-no-shadow">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-button color="primary" (click)="onCancel()">
+                <ion-icon md="arrow-back-sharp" ios="arrow-back-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title>Login</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-list lines="inset" inset="true" class="ion-padding login-form">
+
+        <form [formGroup]="loginForm">
+            <div class="form-field">
+                <ion-item>
+                    <ion-label position="floating">Email</ion-label>
+                    <ion-input type="email" formControlName="email" clearInput="true" [class.invalid]="!loginForm.controls['email'].valid && loginForm.controls['email'].touched">
+                    </ion-input>
+                </ion-item>
+            </div>
+
+            <div class="form-field">
+                <ion-item>
+                    <ion-label position="floating">Password</ion-label>
+                    <ion-input [type]="passwordTpye" formControlName="password" minlength="8" [class.invalid]="!loginForm.controls['password'].valid && loginForm.controls['password'].touched">
+                    </ion-input>
+
+                    <ion-icon (click)="togglePassword()" slot="end" [color]="passwordShown ? 'dark' : 'medium'" [name]="passwordShown ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+                </ion-item>
+            </div>
+            <ion-row>
+                <ion-col size="12" class="ion-no-padding">
+                    <div class="ion-float-right forgot-password">
+                        <ion-button (click)="_forgotPassword()" color="medium" class="ion-text-capitalize" fill="clear">
+                            Forgot Password?
+                        </ion-button>
+                    </div>
+                </ion-col>
+            </ion-row>
+
+            <div class="ion-padding-vertical">
+                <ion-button expand="block" [disabled]="!loginForm.valid" (click)="_loginAction(loginForm)">
+                    Login
+                </ion-button>
+            </div>
+
+        </form>
+
+        <span class="divider line one-line">or</span>
+
+        <div class="ion-padding-vertical">
+            <ion-button class="ion-text-capitalize" expand="block" color="secondary" fill="outline">
+                <ion-icon slot="start" name="logo-google"></ion-icon>
+                &nbsp; Log In with Google
+            </ion-button>
+        </div>
+
+    </ion-list>
+
+</ion-content>
+
+<ion-footer class="ion-no-border ion-no-shadow">
+    <ion-toolbar class="ion-text-center">
+        <ion-button (click)="openRegister()" color="medium" fill="clear" class="ion-text-capitalize" expand="block">
+            Don't have an account? &nbsp;
+            <ion-text color="primary">Register</ion-text>
+        </ion-button>
+    </ion-toolbar>
+</ion-footer>
